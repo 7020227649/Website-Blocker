@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Blocker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <div>
+        <h1>Website Blocker</h1>
+        <p class="subtitle">Stay focused by blocking distracting sites.</p>
+      </div>
+      <button id="settingsButton" class="icon-button" title="Open settings" aria-label="Open settings">⚙</button>
+    </header>
+
+    <section class="status-card">
+      <div>
+        <span class="status-label">Protection</span>
+        <strong id="statusText">Loading…</strong>
+      </div>
+      <label class="switch">
+        <input id="enabledToggle" type="checkbox" aria-label="Enable website blocking">
+        <span class="slider"></span>
+      </label>
+    </section>
+
+    <form id="addForm" class="add-form">
+      <input id="siteInput" type="text" placeholder="example.com" autocomplete="off" spellcheck="false" required>
+      <button type="submit">Block</button>
+    </form>
+    <p id="message" class="message" role="status"></p>
+
+    <section class="sites-section">
+      <div class="section-heading">
+        <h2>Blocked websites</h2>
+        <span id="siteCount" class="count">0</span>
+      </div>
+      <div id="sitesList" class="sites-list"></div>
+      <div id="emptyState" class="empty-state">No websites blocked yet.</div>
+    </section>
+
+    <footer>
+      <a href="options.html" target="_blank" rel="noreferrer">Manage settings</a>
+    </footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
