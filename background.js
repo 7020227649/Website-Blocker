@@ -1,10 +1,21 @@
+const ADULT_DEFAULTS = [
+  'pornhub.com', 'xvideos.com', 'xnxx.com', 'xhamster.com', 'redtube.com',
+  'youporn.com', 'tube8.com', 'spankbang.com', 'txxx.com', 'eporner.com',
+  'porn.com', 'hqporner.com', 'nuvid.com', 'beeg.com', 'drtuber.com',
+  'porntrex.com', 'slutload.com', 'sunporno.com', 'thumbzilla.com',
+  'rule34.xxx', 'nhentai.net', 'xhamsterlive.com', 'chaturbate.com',
+  'stripchat.com', 'cam4.com', 'bongacams.com', 'livejasmin.com'
+];
+
 const DEFAULTS = {
   enabled: true,
+  adultFilter: true,
   blockedSites: [],
-  version: 1
+  version: 2
 };
 
 const RULE_ID_BASE = 1000;
+const ADULT_RULE_ID_BASE = 100000;
 
 function normalizeDomain(input) {
   let value = String(input || '').trim().toLowerCase();
@@ -29,12 +40,16 @@ function isValidDomain(domain) {
   );
 }
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function buildRules(blockedSites) {
   return blockedSites.map((site, index) => {
     const domain = normalizeDomain(site);
     return {
       id: RULE_ID_BASE + index,
-      priority: 1,
+      priority: 10,
       action: {
         type: 'redirect',
         redirect: { extensionPath: '/blocked.html' }
@@ -47,14 +62,29 @@ function buildRules(blockedSites) {
   });
 }
 
-function escapeRegex(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function buildAdultRules() {
+  return ADULT_DEFAULTS.map((site, index) => {
+    const domain = normalizeDomain(site);
+    return {
+      id: ADULT_RULE_ID_BASE + index,
+      priority: 20,
+      action: {
+        type: 'redirect',
+        redirect: { extensionPath: '/blocked.html' }
+      },
+      condition: {
+        regexFilter: `^https?://([^/]+\\.)?${escapeRegex(domain)}([/:?#]|$)`,
+        resourceTypes: ['main_frame']
+      }
+    };
+  });
 }
 
 async function getSettings() {
   const settings = await chrome.storage.local.get(DEFAULTS);
   return {
     enabled: settings.enabled !== false,
+    adultFilter: settings.adultFilter !== false,
     blockedSites: Array.isArray(settings.blockedSites) ? settings.blockedSites : []
   };
 }
@@ -62,27 +92,32 @@ async function getSettings() {
 async function refreshRules() {
   const settings = await getSettings();
   const existing = await chrome.declarativeNetRequest.getDynamicRules();
-  const removeRuleIds = existing.map(rule => rule.id).filter(id => id >= RULE_ID_BASE);
-  const addRules = settings.enabled ? buildRules(settings.blockedSites) : [];
+  const removeRuleIds = existing
+    .map(rule => rule.id)
+    .filter(id => (id >= RULE_ID_BASE && id < RULE_ID_BASE + 10000) || (id >= ADULT_RULE_ID_BASE && id < ADULT_RULE_ID_BASE + 10000));
 
-  await chrome.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds,
-    addRules
-  });
+  const addRules = settings.enabled
+    ? [
+        ...buildRules(settings.blockedSites.filter(site => !ADULT_DEFAULTS.includes(normalizeDomain(site)))),
+        ...(settings.adultFilter ? buildAdultRules() : [])
+      ]
+    : [];
 
+  await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds, addRules });
   await updateBadge(settings);
 }
 
 async function updateBadge(settings) {
-  await chrome.action.setBadgeText({ text: settings.enabled && settings.blockedSites.length ? String(settings.blockedSites.length) : '' });
+  const count = settings.blockedSites.length + (settings.adultFilter ? ADULT_DEFAULTS.length : 0);
+  await chrome.action.setBadgeText({ text: settings.enabled && count ? String(count) : '' });
   await chrome.action.setBadgeBackgroundColor({ color: '#d93025' });
 }
 
 async function initialize() {
   const stored = await chrome.storage.local.get(null);
-  if (stored.enabled === undefined || stored.blockedSites === undefined) {
-    await chrome.storage.local.set(DEFAULTS);
-  }
+  if (stored.enabled === undefined) await chrome.storage.local.set({ enabled: DEFAULTS.enabled });
+  if (stored.adultFilter === undefined) await chrome.storage.local.set({ adultFilter: DEFAULTS.adultFilter });
+  if (stored.blockedSites === undefined) await chrome.storage.local.set({ blockedSites: DEFAULTS.blockedSites });
   await refreshRules();
 }
 
@@ -90,7 +125,7 @@ chrome.runtime.onInstalled.addListener(initialize);
 chrome.runtime.onStartup.addListener(initialize);
 
 chrome.storage.onChanged.addListener(async (changes, area) => {
-  if (area === 'local' && (changes.enabled || changes.blockedSites)) {
+  if (area === 'local' && (changes.enabled || changes.adultFilter || changes.blockedSites)) {
     try {
       await refreshRules();
     } catch (error) {
