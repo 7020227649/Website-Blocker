@@ -1,5 +1,6 @@
 const enabled = document.getElementById('enabled');
 const adultFilter = document.getElementById('adultFilter');
+const gameFilter = document.getElementById('gameFilter');
 const form = document.getElementById('form');
 const domainInput = document.getElementById('domain');
 const list = document.getElementById('list');
@@ -31,7 +32,7 @@ function showStatus(text, kind = '') {
 }
 
 async function getState() {
-  return chrome.storage.local.get({ enabled: true, adultFilter: true, blockedSites: [] });
+  return chrome.storage.local.get({ enabled: true, adultFilter: true, gameFilter: true, blockedSites: [] });
 }
 
 async function saveSites(sites) {
@@ -44,6 +45,7 @@ function render(state) {
   const sites = Array.isArray(state.blockedSites) ? state.blockedSites : [];
   enabled.checked = state.enabled !== false;
   adultFilter.checked = state.adultFilter !== false;
+  gameFilter.checked = state.gameFilter !== false;
   list.innerHTML = '';
   empty.style.display = sites.length ? 'none' : 'block';
 
@@ -85,6 +87,11 @@ enabled.addEventListener('change', async () => {
 adultFilter.addEventListener('change', async () => {
   await chrome.storage.local.set({ adultFilter: adultFilter.checked });
   showStatus(adultFilter.checked ? 'Adult filter enabled.' : 'Adult filter paused.', 'success');
+});
+
+gameFilter.addEventListener('change', async () => {
+  await chrome.storage.local.set({ gameFilter: gameFilter.checked });
+  showStatus(gameFilter.checked ? 'Student game filter enabled.' : 'Student game filter paused.', 'success');
 });
 
 clearButton.addEventListener('click', async () => {
