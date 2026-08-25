@@ -1,8 +1,8 @@
 # Website Blocker — Free Privacy-First Chrome Extension
 
-**Website Blocker** is a free, open-source **Google Chrome extension** for blocking distracting websites, unwanted websites, and common adult-content websites. It is designed for people who want a simple website blocker, focus tool, and privacy-friendly browser extension without subscriptions or a required account.
+**Website Blocker** is a free, open-source **Google Chrome extension** for blocking distracting websites, unwanted websites, common adult-content websites, and online game websites. It is designed especially for students, parents, educators, and people who want a simple focus tool and privacy-friendly browser extension without subscriptions or a required account.
 
-> **100% free for everyone, for a lifetime. Open source. Privacy first.**
+> **100% free for everyone, for a lifetime. Open source. Privacy first. Student friendly.**
 
 [![Open Source](https://img.shields.io/badge/open%20source-yes-success)](https://github.com/7020227649/Website-Blocker)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4)](https://github.com/7020227649/Website-Blocker)
@@ -10,15 +10,58 @@
 
 ## What is Website Blocker?
 
-Website Blocker is a **Chrome website blocker extension** that lets you block websites such as social media, video sites, distracting sites, and adult-content sites. You can add your own domains, pause protection, and manage settings from a simple browser popup.
+Website Blocker is a **Chrome website blocker extension** that lets you block distracting websites, social media, video sites, online game websites, and adult-content websites. You can add your own domains, pause protection, and manage settings from a simple browser popup.
 
 The project is intentionally lightweight and privacy-focused. It does not require a backend service, account, subscription, advertising system, or analytics platform.
+
+## Built for students
+
+Students often lose study time to browser games and entertainment websites. Website Blocker includes a **Student Game Filter** that is enabled by default and blocks a curated list of major browser-game portals and online game sites.
+
+The game list includes well-known browser gaming platforms and services such as:
+
+- Poki
+- Playhop
+- CrazyGames
+- Y8
+- Coolmath Games
+- Kizi
+- Miniclip
+- Addicting Games
+- Armor Games
+- Kongregate
+- Newgrounds
+- Friv
+- Lagged
+- SilverGames
+- GamesGames
+- Not Doppler
+- Mousebreaker
+- PrimaryGames
+- KBH Games
+- GameFlare
+- itch.io
+- GameDistribution
+- Shell Shockers
+- Krunker
+- Slither.io
+- Agar.io
+- Paper.io
+- Hole.io
+- Diep.io
+- Moomoo.io
+- Skribbl.io
+- 1v1.LOL
+- and other unblocked/browser-game portals
+
+The built-in list is intentionally **curated rather than claiming to contain every game website on the internet**. New game portals can appear, so the project also lets users add custom domains at any time.
 
 ## Why use this Chrome website blocker?
 
 Website Blocker is built for:
 
 - **Focus and productivity** — block distracting websites while studying or working.
+- **Student focus** — block popular browser-game portals during study time.
 - **Adult-content protection** — a built-in adult website filter is enabled by default.
 - **Privacy** — extension settings are stored locally in the Chrome profile.
 - **Simplicity** — add a domain and block it without complicated configuration.
@@ -30,7 +73,10 @@ Website Blocker is built for:
 - Block custom websites by domain.
 - Block domains and their subdomains.
 - Built-in adult-content website protection.
+- **Student Game Filter enabled by default** for major online game websites.
 - Enable or pause protection at any time.
+- Independently enable or pause the adult-content filter.
+- Independently enable or pause the student game filter.
 - Manage blocked websites from the popup or Settings page.
 - Keep the original website URL visible in the browser address bar when a page is blocked.
 - **No watermark on blocked pages** — the blocked experience does not add Website Blocker branding, logos, promotional banners, or watermarks to the page.
@@ -68,7 +114,7 @@ The goal is simple: provide a useful **free Chrome website blocker** that anyone
 4. Select **Load unpacked**.
 5. Choose the `Website-Blocker` repository folder.
 6. Pin **Website Blocker** to the Chrome toolbar.
-7. Open the extension and add domains such as `youtube.com`, `reddit.com`, or other sites you want to block.
+7. Open the extension and review the Student Game Filter and Adult Content Filter settings.
 
 ## For developers
 
@@ -120,9 +166,9 @@ Web4Cause focuses exclusively on creating websites and digital experiences for *
 
 ## About this project
 
-Website Blocker is also suitable as a learning project for developers interested in Chrome extension development, browser privacy, content blocking, Manifest V3, and client-side web technologies.
+Website Blocker is also suitable as a learning project for developers interested in Chrome extension development, browser privacy, content blocking, Manifest V3, student productivity, and client-side web technologies.
 
-The project name and description intentionally make the purpose clear: **Website Blocker is a free Chrome extension for blocking websites.**
+The project name and description intentionally make the purpose clear: **Website Blocker is a free Chrome extension for blocking websites, including distracting online games.**
 
 ## Search topics and keywords
 
@@ -137,6 +183,16 @@ This repository is relevant to people searching for:
 - block websites on Chrome
 - block distracting websites
 - productivity website blocker
+- student website blocker
+- student Chrome extension
+- online game website blocker
+- browser game blocker
+- block online games on Chrome
+- Poki blocker
+- Playhop blocker
+- CrazyGames blocker
+- Y8 blocker
+- Coolmath Games blocker
 - adult website blocker
 - adult-content blocker Chrome extension
 - privacy website blocker
@@ -160,9 +216,10 @@ This project includes an open-source license in the repository. See [`LICENSE`](
 
 - Blocking is domain-based, so blocking `youtube.com` also applies to `www.youtube.com` and matching subdomains.
 - The extension intentionally stores its own settings locally.
+- The Student Game Filter is a curated blocklist and does not claim to cover every game website on the internet.
 - `chrome://` pages and Chrome Web Store pages are not blockable by ordinary extension rules.
 - Search engines decide independently whether and how to index and rank public GitHub content.
 
 ---
 
-**Website Blocker — a free, open-source, privacy-first Chrome extension by Sagar Deshmukh, associated with Web4Cause.**
+**Website Blocker — a free, open-source, privacy-first Chrome extension for students and everyone, by Sagar Deshmukh and associated with Web4Cause.**
