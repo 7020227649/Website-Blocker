@@ -1,4 +1,5 @@
 const enabled = document.getElementById('enabled');
+const adultFilter = document.getElementById('adultFilter');
 const form = document.getElementById('form');
 const domainInput = document.getElementById('domain');
 const list = document.getElementById('list');
@@ -30,7 +31,7 @@ function showStatus(text, kind = '') {
 }
 
 async function getState() {
-  return chrome.storage.local.get({ enabled: true, blockedSites: [] });
+  return chrome.storage.local.get({ enabled: true, adultFilter: true, blockedSites: [] });
 }
 
 async function saveSites(sites) {
@@ -42,6 +43,7 @@ async function saveSites(sites) {
 function render(state) {
   const sites = Array.isArray(state.blockedSites) ? state.blockedSites : [];
   enabled.checked = state.enabled !== false;
+  adultFilter.checked = state.adultFilter !== false;
   list.innerHTML = '';
   empty.style.display = sites.length ? 'none' : 'block';
 
@@ -80,12 +82,17 @@ enabled.addEventListener('change', async () => {
   showStatus(enabled.checked ? 'Blocking enabled.' : 'Blocking paused.', 'success');
 });
 
+adultFilter.addEventListener('change', async () => {
+  await chrome.storage.local.set({ adultFilter: adultFilter.checked });
+  showStatus(adultFilter.checked ? 'Adult filter enabled.' : 'Adult filter paused.', 'success');
+});
+
 clearButton.addEventListener('click', async () => {
   const state = await getState();
   if (!state.blockedSites.length) return;
-  if (!confirm('Remove every blocked website?')) return;
+  if (!confirm('Remove every custom blocked website?')) return;
   await saveSites([]);
-  showStatus('Blocked list cleared.', 'success');
+  showStatus('Custom blocked list cleared.', 'success');
 });
 
 chrome.storage.onChanged.addListener(() => getState().then(render));
