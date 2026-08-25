@@ -33,6 +33,8 @@ Website Blocker is built for:
 - Enable or pause protection at any time.
 - Manage blocked websites from the popup or Settings page.
 - Keep the original website URL visible in the browser address bar when a page is blocked.
+- **No watermark on blocked pages** — the blocked experience does not add Website Blocker branding, logos, promotional banners, or watermarks to the page.
+- **No extension branding shown on the blocked page** — the error-style screen is intentionally clean and unbranded.
 - Local settings using `chrome.storage.local`.
 - Chrome Manifest V3 architecture.
 - No external libraries required.
