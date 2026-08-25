@@ -34,15 +34,22 @@
 <body>
   <main class="wrap">
     <h1>Website Blocker Settings</h1>
-    <p class="lead">Control which websites are blocked by the extension.</p>
+    <p class="lead">Control website blocking and the default adult-content protection.</p>
 
     <section class="card">
       <div class="row">
         <div>
           <h2>Protection</h2>
-          <p>Turn blocking on or off without deleting your blocked list.</p>
+          <p>Turn all blocking on or off without deleting your blocked list.</p>
         </div>
         <input id="enabled" type="checkbox" aria-label="Enable blocking" style="width:20px;height:20px">
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div>
+          <h2>Adult content filter</h2>
+          <p>Block a built-in list of common adult-content websites by default.</p>
+        </div>
+        <input id="adultFilter" type="checkbox" aria-label="Enable adult content filter" style="width:20px;height:20px">
       </div>
     </section>
 
@@ -54,11 +61,11 @@
       </form>
       <div id="status" class="status" role="status"></div>
       <div id="list" class="list"></div>
-      <p id="empty" class="muted">No websites are blocked.</p>
-      <button id="clear" class="secondary" type="button" style="margin-top:14px">Clear all</button>
+      <p id="empty" class="muted">No custom websites are blocked.</p>
+      <button id="clear" class="secondary" type="button" style="margin-top:14px">Clear custom list</button>
     </section>
 
-    <div class="footer">Website Blocker stores your settings locally in Chrome.</div>
+    <div class="footer">The adult filter is separate from your custom blocked list and is enabled by default.</div>
   </main>
   <script src="options.js"></script>
 </body>
