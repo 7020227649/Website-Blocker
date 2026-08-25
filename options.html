@@ -29,6 +29,13 @@
     .status.error { color: #d93025; }
     .status.success { color: #188038; }
     .footer { margin-top: 20px; color: #80868b; font-size: 12px; }
+    .developer-card h2 { font-size: 18px; }
+    .developer-card p { margin-bottom: 14px; }
+    .developer-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 14px; border-top: 1px solid #eef0f2; }
+    .developer-name { font-size: 14px; font-weight: 700; }
+    .developer-role { display: block; margin-top: 3px; font-size: 12px; color: #80868b; }
+    .profile-link { color: #0a66c2; text-decoration: none; font-weight: 600; font-size: 13px; padding: 9px 12px; border-radius: 10px; background: #eef5fb; }
+    .profile-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -65,7 +72,19 @@
       <button id="clear" class="secondary" type="button" style="margin-top:14px">Clear custom list</button>
     </section>
 
-    <div class="footer">The adult filter is separate from your custom blocked list and is enabled by default.</div>
+    <section class="card developer-card">
+      <h2>About Website Blocker</h2>
+      <p>Website Blocker is a privacy-first, open-source Chrome extension created to help people reduce distractions and browse with more control. It is 100% free for a lifetime, with no subscription, analytics, tracking, or required remote service.</p>
+      <div class="developer-row">
+        <div>
+          <span class="developer-name">Sagar Deshmukh</span>
+          <span class="developer-role">MSW · Web Developer</span>
+        </div>
+        <a class="profile-link" href="https://in.linkedin.com/in/sagar-deshmukh-social-worker" target="_blank" rel="noreferrer">Developer Profile ↗</a>
+      </div>
+    </section>
+
+    <div class="footer">Settings are stored locally in Chrome.</div>
   </main>
   <script src="options.js"></script>
 </body>
