@@ -1,9 +1,11 @@
-const DEFAULTS = { enabled: true, adultFilter: true, blockedSites: [] };
+const DEFAULTS = { enabled: true, adultFilter: true, gameFilter: true, blockedSites: [] };
 
 const enabledToggle = document.getElementById('enabledToggle');
 const adultToggle = document.getElementById('adultToggle');
+const gameToggle = document.getElementById('gameToggle');
 const statusText = document.getElementById('statusText');
 const adultStatusText = document.getElementById('adultStatusText');
+const gameStatusText = document.getElementById('gameStatusText');
 const addForm = document.getElementById('addForm');
 const siteInput = document.getElementById('siteInput');
 const message = document.getElementById('message');
@@ -44,11 +46,14 @@ function setMessage(text, isSuccess = false) {
 function render(state) {
   const enabled = state.enabled !== false;
   const adultFilter = state.adultFilter !== false;
+  const gameFilter = state.gameFilter !== false;
   const sites = Array.isArray(state.blockedSites) ? state.blockedSites : [];
   enabledToggle.checked = enabled;
   adultToggle.checked = adultFilter;
+  gameToggle.checked = gameFilter;
   statusText.textContent = enabled ? (sites.length ? 'Blocking is active' : 'Protection is on') : 'Blocking is paused';
   adultStatusText.textContent = adultFilter ? 'Protected by default' : 'Adult filter is off';
+  gameStatusText.textContent = gameFilter ? 'Student mode enabled' : 'Game filter is off';
   siteCount.textContent = sites.length;
   sitesList.innerHTML = '';
   emptyState.style.display = sites.length ? 'none' : 'block';
@@ -108,9 +113,17 @@ async function toggleAdultFilter() {
   setMessage(adultToggle.checked ? 'Adult website blocking enabled.' : 'Adult filter paused.', true);
 }
 
+async function toggleGameFilter() {
+  await chrome.storage.local.set({ gameFilter: gameToggle.checked });
+  const state = await getState();
+  render(state);
+  setMessage(gameToggle.checked ? 'Student game filter enabled.' : 'Game filter paused.', true);
+}
+
 addForm.addEventListener('submit', addSite);
 enabledToggle.addEventListener('change', toggleEnabled);
 adultToggle.addEventListener('change', toggleAdultFilter);
+gameToggle.addEventListener('change', toggleGameFilter);
 settingsButton.addEventListener('click', () => chrome.runtime.openOptionsPage());
 
 chrome.storage.onChanged.addListener(() => getState().then(render));
