@@ -27,6 +27,17 @@
       </label>
     </section>
 
+    <section class="status-card secondary-status">
+      <div>
+        <span class="status-label">Adult content filter</span>
+        <strong id="adultStatusText">Loading…</strong>
+      </div>
+      <label class="switch">
+        <input id="adultToggle" type="checkbox" aria-label="Enable adult content blocking">
+        <span class="slider"></span>
+      </label>
+    </section>
+
     <form id="addForm" class="add-form">
       <input id="siteInput" type="text" placeholder="example.com" autocomplete="off" spellcheck="false" required>
       <button type="submit">Block</button>
@@ -39,7 +50,7 @@
         <span id="siteCount" class="count">0</span>
       </div>
       <div id="sitesList" class="sites-list"></div>
-      <div id="emptyState" class="empty-state">No websites blocked yet.</div>
+      <div id="emptyState" class="empty-state">No custom websites blocked yet.</div>
     </section>
 
     <footer>
