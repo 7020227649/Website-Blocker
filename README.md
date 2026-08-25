@@ -100,6 +100,24 @@ Sagar Deshmukh created this project with a focus on practical web development, p
 **Developer profile:**
 https://in.linkedin.com/in/sagar-deshmukh-social-worker
 
+## Main business — Web4Cause
+
+**Web4Cause** is the main business associated with developer **Sagar Deshmukh**.
+
+**Website:** https://web4cause.com
+
+Web4Cause focuses exclusively on creating websites and digital experiences for **Non Profit organizations, NGOs, Charities, CSR initiatives, Trusts, and Societies**. The mission is to help purpose-driven organizations establish a strong, professional, and accessible presence on the web.
+
+**Web4Cause specialties:**
+
+- Non Profit websites
+- NGO websites
+- Charity websites
+- CSR websites and digital initiatives
+- Trust websites
+- Society websites
+- Purpose-driven web development
+
 ## About this project
 
 Website Blocker is also suitable as a learning project for developers interested in Chrome extension development, browser privacy, content blocking, Manifest V3, and client-side web technologies.
@@ -126,6 +144,13 @@ This repository is relevant to people searching for:
 - free productivity Chrome extension
 - Sagar Deshmukh Website Blocker
 - Sagar Deshmukh Chrome extension
+- Web4Cause website developer
+- Web4Cause NGO website development
+- Web4Cause Non Profit website
+- Web4Cause charity website
+- Web4Cause CSR website
+- Web4Cause Trust website
+- Web4Cause Society website
 
 ## License
 
@@ -140,4 +165,4 @@ This project includes an open-source license in the repository. See [`LICENSE`](
 
 ---
 
-**Website Blocker — a free, open-source, privacy-first Chrome extension by Sagar Deshmukh.**
+**Website Blocker — a free, open-source, privacy-first Chrome extension by Sagar Deshmukh, associated with Web4Cause.**
