@@ -1,14 +1,6 @@
 (() => {
   const OVERLAY_ID = '__website_error_overlay__';
 
-  function getCurrentHostname() {
-    try {
-      return location.hostname.toLowerCase().replace(/^www\./, '');
-    } catch {
-      return '';
-    }
-  }
-
   const ADULT_DEFAULTS = [
     'pornhub.com', 'xvideos.com', 'xnxx.com', 'xhamster.com', 'redtube.com',
     'youporn.com', 'tube8.com', 'spankbang.com', 'txxx.com', 'eporner.com',
@@ -18,20 +10,44 @@
     'stripchat.com', 'cam4.com', 'bongacams.com', 'livejasmin.com'
   ];
 
+  const GAME_DEFAULTS = [
+    'poki.com', 'playhop.com', 'crazygames.com', 'y8.com', 'coolmathgames.com',
+    'kizi.com', 'miniclip.com', 'addictinggames.com', 'armorgames.com',
+    'kongregate.com', 'newgrounds.com', 'friv.com', 'lagged.com', 'silvergames.com',
+    'gamesgames.com', 'notdoppler.com', 'mousebreaker.com', 'primarygames.com',
+    'puffgames.com', 'a10.com', 'agame.com', 'fog.com', 'kbhgames.com',
+    'gameflare.com', 'yad.com', 'gamevui.com', 'crazygames.co', 'plays.org',
+    'itch.io', 'gamedistribution.com', 'crazygames.com.br', 'y8.com.br',
+    'io-games.com', 'iogames.space', 'iogames.fun', 'iogames.onl',
+    'shellshock.io', 'krunker.io', 'slither.io', 'agar.io', 'paper-io.com',
+    'surviv.io', 'hole-io.com', 'diep.io', 'moomoo.io', 'skribbl.io',
+    '1v1.lol', 'brawlhalla.com', 'friv5online.com', 'unblockedgames66.com',
+    'unblockedgames77.com', 'unblockedgameswtf.com', 'unblockedgames911.com'
+  ];
+
+  function getCurrentHostname() {
+    try {
+      return location.hostname.toLowerCase().replace(/^www\./, '');
+    } catch {
+      return '';
+    }
+  }
+
   function normalizeDomain(value) {
     return String(value || '').trim().toLowerCase().replace(/^www\./, '');
   }
 
-  function shouldBlock(hostname, blockedSites, adultFilter) {
+  function matchesDomain(host, domain) {
+    const normalized = normalizeDomain(domain);
+    return host === normalized || host.endsWith(`.${normalized}`);
+  }
+
+  function shouldBlock(hostname, blockedSites, adultFilter, gameFilter) {
     const host = normalizeDomain(hostname);
-    const customMatch = blockedSites.some((domain) => {
-      const normalized = normalizeDomain(domain);
-      return host === normalized || host.endsWith(`.${normalized}`);
-    });
-    const adultMatch = adultFilter && ADULT_DEFAULTS.some((domain) => {
-      return host === domain || host.endsWith(`.${domain}`);
-    });
-    return customMatch || adultMatch;
+    const customMatch = blockedSites.some((domain) => matchesDomain(host, domain));
+    const adultMatch = adultFilter && ADULT_DEFAULTS.some((domain) => matchesDomain(host, domain));
+    const gameMatch = gameFilter && GAME_DEFAULTS.some((domain) => matchesDomain(host, domain));
+    return customMatch || adultMatch || gameMatch;
   }
 
   function removeOverlay() {
@@ -77,10 +93,7 @@
         box-sizing: border-box !important;
       }
       #${OVERLAY_ID} * { box-sizing: border-box !important; }
-      #${OVERLAY_ID} .wb-error-page {
-        width: min(680px, 100%);
-        text-align: left;
-      }
+      #${OVERLAY_ID} .wb-error-page { width: min(680px, 100%); text-align: left; }
       #${OVERLAY_ID} .wb-code {
         font-size: clamp(88px, 18vw, 150px);
         line-height: .9;
@@ -103,11 +116,7 @@
         line-height: 1.6;
         color: #5f6368;
       }
-      #${OVERLAY_ID} .wb-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
+      #${OVERLAY_ID} .wb-actions { display: flex; gap: 10px; flex-wrap: wrap; }
       #${OVERLAY_ID} button {
         border: 1px solid #dadce0;
         border-radius: 8px;
@@ -132,14 +141,16 @@
       const {
         enabled = true,
         adultFilter = true,
+        gameFilter = true,
         blockedSites = []
       } = await chrome.storage.local.get({
         enabled: true,
         adultFilter: true,
+        gameFilter: true,
         blockedSites: []
       });
 
-      const block = enabled && shouldBlock(getCurrentHostname(), blockedSites, adultFilter);
+      const block = enabled && shouldBlock(getCurrentHostname(), blockedSites, adultFilter, gameFilter);
       if (block) showOverlay();
       else removeOverlay();
     } catch {
